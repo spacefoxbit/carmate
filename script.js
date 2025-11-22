@@ -4378,16 +4378,21 @@ document.addEventListener('DOMContentLoaded', function() {
   const customToggle = document.getElementById('customToggle');
   const customSchedules = document.getElementById('customSchedules');
   
-  // Handle custom toggle
-  customToggle.addEventListener('change', function() {
-    if (this.checked) {
+  // Handle custom toggle - use both click and change for iOS compatibility
+  const toggleCustomSchedules = function() {
+    if (customToggle.checked) {
       customSchedules.classList.remove('hidden');
+      customSchedules.style.display = 'flex';
     } else {
       customSchedules.classList.add('hidden');
+      customSchedules.style.display = 'none';
       // Reset to manufacturer when hiding custom options
       document.querySelector('input[value="manufacturer"]').checked = true;
     }
-  });
+  };
+  
+  customToggle.addEventListener('change', toggleCustomSchedules);
+  customToggle.addEventListener('click', toggleCustomSchedules);
   
   calcBtn.addEventListener('click', function() {
     const currentMileage = parseInt(mileageInput.value);
