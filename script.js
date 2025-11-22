@@ -4510,8 +4510,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add note about reminder in description
     description += '\n⏰ Reminder: Set notification for 5 days before service date';
     
-    // Create Google Calendar URL
-    const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${dateStr}/${dateStr}&details=${encodeURIComponent(description)}&add=7200&sf=true&output=xml`;
+    // Create Google Calendar URL (note: reminders must be added manually in Google Calendar)
+    const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${dateStr}/${dateStr}&details=${encodeURIComponent(description)}&sf=true&output=xml`;
     
     // Open in new window/tab
     window.open(calendarUrl, '_blank');
