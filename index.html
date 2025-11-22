@@ -49,8 +49,40 @@
         </div>
 
         <section id="result" class="result hidden">
-          <div class="row"><strong>Next maintenance mileage:</strong> <span id="nextMileage">—</span></div>
-          <div class="row"><strong>Suggested service date:</strong> <span id="nextDate">—</span></div>
+          <div class="timeline-container">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content right">
+                <div class="timeline-label">Previous Service</div>
+                <div class="timeline-value" id="previousMileage">—</div>
+              </div>
+            </div>
+            <div class="timeline-scale">
+              <div class="timeline-line"></div>
+              <div class="timeline-current" id="timelineCurrent">
+                <div class="timeline-content left">
+                  <div class="timeline-label">Current Mileage</div>
+                  <div class="timeline-value" id="currentMileage">—</div>
+                </div>
+                <div class="timeline-dot breathing"></div>
+              </div>
+            </div>
+            <div class="timeline-item highlight">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content right">
+                <div class="timeline-label">Next Maintenance</div>
+                <div class="timeline-value" id="nextMileage">—</div>
+                <div class="timeline-date" id="nextDate">—</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="services-section">
+            <h2 class="services-header">Services Needed</h2>
+            <div class="cols">
+              <!-- Action columns will be dynamically generated here -->
+            </div>
+          </div>
           
           <div class="calendar-buttons">
             <button id="addToGoogleCalendarBtn" class="calendar-btn google-calendar">
@@ -65,10 +97,6 @@
               </svg>
               Add to Apple Calendar
             </button>
-          </div>
-
-          <div class="cols">
-            <!-- Action columns will be dynamically generated here -->
           </div>
         </section>
       </div>

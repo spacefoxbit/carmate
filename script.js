@@ -4290,8 +4290,20 @@ function findNextMaintenance(currentMileage, carKey, scheduleType) {
   const schedule = car.scheduleTypes[scheduleType];
   if (!schedule) return null;
   
-  // Find next interval
-  const nextInterval = schedule.intervals.find(interval => interval > currentMileage);
+  // Find previous and next intervals
+  let previousInterval = 0;
+  let nextInterval = null;
+  
+  for (let i = 0; i < schedule.intervals.length; i++) {
+    if (schedule.intervals[i] > currentMileage) {
+      nextInterval = schedule.intervals[i];
+      if (i > 0) {
+        previousInterval = schedule.intervals[i - 1];
+      }
+      break;
+    }
+  }
+  
   if (!nextInterval) {
     return {
       found: false,
@@ -4299,7 +4311,7 @@ function findNextMaintenance(currentMileage, carKey, scheduleType) {
     };
   }
   
-  // Find items by action type
+  // Find items by action type for next interval
   const intervalIndex = schedule.intervals.indexOf(nextInterval);
   const replaceItems = [];
   const inspectItems = [];
@@ -4359,6 +4371,7 @@ function findNextMaintenance(currentMileage, carKey, scheduleType) {
   
   return {
     found: true,
+    previousMileage: previousInterval,
     nextMileage: nextInterval,
     expectedDate: calculateExpectedDate(currentMileage, nextInterval),
     replaceItems: replaceItems,
@@ -4434,9 +4447,20 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
     
-    // Update UI
+    // Update UI with timeline
+    document.getElementById('previousMileage').textContent = result.previousMileage.toLocaleString() + ' km';
+    document.getElementById('currentMileage').textContent = currentMileage.toLocaleString() + ' km';
     document.getElementById('nextMileage').textContent = result.nextMileage.toLocaleString() + ' km';
     document.getElementById('nextDate').textContent = result.expectedDate;
+    
+    // Calculate position percentage for current mileage on the scale
+    const range = result.nextMileage - result.previousMileage;
+    const position = currentMileage - result.previousMileage;
+    const percentage = (position / range) * 100;
+    
+    // Position the current mileage dot on the timeline (0% = top, 100% = bottom)
+    const timelineCurrent = document.getElementById('timelineCurrent');
+    timelineCurrent.style.top = `${percentage}%`;
     
     // Clear previous columns
     const colsContainer = document.querySelector('.cols');
