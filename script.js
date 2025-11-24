@@ -4488,10 +4488,21 @@ document.addEventListener('DOMContentLoaded', function() {
     
     resultDiv.style.display = 'block';
     
-    // Show supplier card only for Lexus IS300
+    // Show supplier card only for Lexus IS300 and update WhatsApp link with parts list
     const supplierCard = document.getElementById('supplierCard');
     if (carKey === 'is300') {
       supplierCard.style.display = 'block';
+      
+      // Build parts list for WhatsApp message
+      let partsList = '';
+      if (result.replaceItems.length > 0) {
+        partsList = result.replaceItems.join(', ');
+      }
+      
+      // Create WhatsApp message
+      const message = `Hi, I am from the 4IS Lexus Club, I would like to buy ${partsList}. Can I get a quote?`;
+      const whatsappLink = document.querySelector('.whatsapp-btn');
+      whatsappLink.href = `https://wa.me/60129357153?text=${encodeURIComponent(message)}`;
     } else {
       supplierCard.style.display = 'none';
     }
